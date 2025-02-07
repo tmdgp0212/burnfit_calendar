@@ -1,10 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
+import Calendar from '../components/Calendar/Calendar';
 
 const HomeScreen = () => {
   return (
     <View style={styles.screen}>
-      <Text>HomeScreen</Text>
+      <Calendar />
     </View>
   );
 };
@@ -14,7 +15,5 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
