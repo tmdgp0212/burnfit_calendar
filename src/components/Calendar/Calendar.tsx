@@ -5,6 +5,8 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MonthlyCalendar from './MonthlyCalendar';
 import WeeklyCalendar from './WeeklyCalendar';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import {useCalendar} from '../../hooks/useCalendar';
 import {dateComparer} from '../../util/dateComparer';
 import {days, months} from '../../const/date';
@@ -22,14 +24,14 @@ const Calendar = () => {
       <View style={styles.screen}>
         <View style={styles.navigation}>
           <Pressable onPress={calendar.goPrevMonth} style={styles.button}>
-            <Text style={styles.icon}>&lt;</Text>
+            <Icon name="angle-left" size={24} color="#232B99" />
           </Pressable>
           <Text style={styles.month}>
-            {months[calendar.currenDate.getMonth()]}{' '}
-            {calendar.currenDate.getFullYear()}
+            {months[calendar.currentDate.getMonth()]}{' '}
+            {calendar.currentDate.getFullYear()}
           </Text>
           <Pressable onPress={calendar.goNextMonth} style={styles.button}>
-            <Text style={styles.icon}>&gt;</Text>
+            <Icon name="angle-right" size={24} color="#232B99" />
           </Pressable>
         </View>
         <View>
@@ -67,16 +69,17 @@ const Calendar = () => {
 
         {/* 플로팅 버튼 */}
         {((isMonthlyView &&
-          !dateComparer(calendar.currenDate, new Date()).isSameMonth) ||
+          !dateComparer(calendar.currentDate, new Date()).isSameMonth) ||
           (!isMonthlyView &&
-            !dateComparer(calendar.currenDate, new Date()).isSameWeek)) && (
+            !dateComparer(calendar.currentDate, new Date()).isSameWeek)) && (
           <Pressable
             style={styles.floating}
             onPress={() => {
-              calendar.setCurrenDate(new Date());
+              calendar.setCurrentDate(new Date());
               calendar.setSelectedDate(new Date());
             }}>
-            <Text style={styles.text_white}>&lt; today</Text>
+            <Icon name="repeat" size={12} color="#fff" />
+            <Text style={styles.text_white}>today</Text>
           </Pressable>
         )}
       </View>
@@ -120,17 +123,18 @@ const styles = StyleSheet.create({
   days: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 32,
+    width: 40,
     height: 32,
   },
   floating: {
     position: 'absolute',
     bottom: 32,
     right: 20,
-    width: 56,
-    height: 40,
+    padding: 12,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
+    gap: 4,
     backgroundColor: '#AAAEEB',
     borderRadius: 100,
   },

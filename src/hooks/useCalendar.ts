@@ -3,7 +3,7 @@ import {Calendar, Day} from '../types/calendar';
 import {getMonthlyCalendar, getWeeklyCalendar} from '../util/calendar';
 
 export const useCalendar = () => {
-  const [currenDate, setCurrenDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [currentCalendar, setCurrentCalendar] = useState<Calendar>();
@@ -15,48 +15,50 @@ export const useCalendar = () => {
   const [nextWeek, setNextWeek] = useState<Day[]>();
 
   const goPrevMonth = () => {
-    setCurrenDate(new Date(currenDate.getFullYear(), currenDate.getMonth(), 0));
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth(), 0),
+    );
   };
 
   const goNextMonth = () => {
-    setCurrenDate(
-      new Date(currenDate.getFullYear(), currenDate.getMonth() + 1),
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1),
     );
   };
 
   const goPrevWeek = () => {
-    setCurrenDate(
+    setCurrentDate(
       new Date(
-        currenDate.getFullYear(),
-        currenDate.getMonth(),
-        currenDate.getDate() - 7,
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() - 7,
       ),
     );
   };
 
   const goNextWeek = () => {
-    setCurrenDate(
+    setCurrentDate(
       new Date(
-        currenDate.getFullYear(),
-        currenDate.getMonth(),
-        currenDate.getDate() + 7,
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() + 7,
       ),
     );
   };
 
   useEffect(() => {
-    const year = currenDate.getFullYear();
-    const month = currenDate.getMonth();
-    const date = currenDate.getDate();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const date = currentDate.getDate();
 
-    setCurrentCalendar(getMonthlyCalendar(currenDate));
+    setCurrentCalendar(getMonthlyCalendar(currentDate));
     setPrevCalendar(getMonthlyCalendar(new Date(year, month - 1)));
     setNextCalendar(getMonthlyCalendar(new Date(year, month + 1)));
 
-    setCurrentWeek(getWeeklyCalendar(currenDate));
+    setCurrentWeek(getWeeklyCalendar(currentDate));
     setPrevWeek(getWeeklyCalendar(new Date(year, month, date - 7)));
     setNextWeek(getWeeklyCalendar(new Date(year, month, date + 7)));
-  }, [currenDate]);
+  }, [currentDate]);
 
   return {
     currentCalendar,
@@ -65,8 +67,8 @@ export const useCalendar = () => {
     currentWeek,
     prevWeek,
     nextWeek,
-    currenDate,
-    setCurrenDate,
+    currentDate,
+    setCurrentDate,
     selectedDate,
     setSelectedDate,
     goNextMonth,

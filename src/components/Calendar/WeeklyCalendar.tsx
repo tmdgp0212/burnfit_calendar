@@ -33,6 +33,7 @@ const WeeklyCalendar = ({calendar, changeViewType}: Props) => {
               item={date}
               selectedDate={calendar.selectedDate}
               setSelectedDate={calendar.setSelectedDate}
+              setCurrentDate={calendar.setCurrentDate}
             />
           ))}
         </Animated.View>
@@ -43,6 +44,7 @@ const WeeklyCalendar = ({calendar, changeViewType}: Props) => {
               item={date}
               selectedDate={calendar.selectedDate}
               setSelectedDate={calendar.setSelectedDate}
+              setCurrentDate={calendar.setCurrentDate}
             />
           ))}
         </Animated.View>
@@ -53,6 +55,7 @@ const WeeklyCalendar = ({calendar, changeViewType}: Props) => {
               item={date}
               selectedDate={calendar.selectedDate}
               setSelectedDate={calendar.setSelectedDate}
+              setCurrentDate={calendar.setCurrentDate}
             />
           ))}
         </Animated.View>

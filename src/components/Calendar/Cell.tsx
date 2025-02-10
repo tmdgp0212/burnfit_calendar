@@ -1,4 +1,10 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {dateComparer} from '../../util/dateComparer';
 import {Day} from '../../types/calendar';
 
@@ -6,16 +12,18 @@ interface Props {
   item: Day;
   selectedDate: Date;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-const Cell = ({item, selectedDate, setSelectedDate}: Props) => {
+const Cell = ({item, selectedDate, setSelectedDate, setCurrentDate}: Props) => {
   const isToday = dateComparer(item.date, new Date()).isSameDate;
   const isSelected = dateComparer(item.date, selectedDate).isSameDate;
 
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={() => {
         setSelectedDate(item.date);
+        setCurrentDate(item.date);
       }}
       style={[styles.cellContainer]}>
       <View
@@ -32,7 +40,7 @@ const Cell = ({item, selectedDate, setSelectedDate}: Props) => {
           {item.day}
         </Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
@@ -42,6 +50,7 @@ const styles = StyleSheet.create({
   cellContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: 40,
   },
   round: {
     justifyContent: 'center',
@@ -55,7 +64,7 @@ const styles = StyleSheet.create({
     borderColor: '#232B99',
   },
   selected: {
-    backgroundColor: '#7A81DE',
+    backgroundColor: '#AAAEEB',
   },
   selected_text: {
     color: 'white',

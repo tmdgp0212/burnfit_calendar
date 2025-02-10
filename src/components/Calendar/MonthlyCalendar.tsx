@@ -32,6 +32,7 @@ const MonthlyCalendar = ({calendar, changeViewType}: Props) => {
             calendar={calendar.prevCalendar}
             selectedDate={calendar.selectedDate}
             setSelectedDate={calendar.setSelectedDate}
+            setCurrentDate={calendar.setCurrentDate}
           />
         </Animated.View>
         {/* 현재 달력 */}
@@ -40,6 +41,7 @@ const MonthlyCalendar = ({calendar, changeViewType}: Props) => {
             calendar={calendar.currentCalendar}
             selectedDate={calendar.selectedDate}
             setSelectedDate={calendar.setSelectedDate}
+            setCurrentDate={calendar.setCurrentDate}
           />
         </Animated.View>
         {/* 다음 달 달력 */}
@@ -48,6 +50,7 @@ const MonthlyCalendar = ({calendar, changeViewType}: Props) => {
             calendar={calendar.nextCalendar}
             selectedDate={calendar.selectedDate}
             setSelectedDate={calendar.setSelectedDate}
+            setCurrentDate={calendar.setCurrentDate}
           />
         </Animated.View>
       </Animated.View>

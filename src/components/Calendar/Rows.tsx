@@ -7,9 +7,15 @@ interface Props {
   calendar: Calendar | undefined;
   selectedDate: Date;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-const Rows = ({calendar, selectedDate, setSelectedDate}: Props) => {
+const Rows = ({
+  calendar,
+  selectedDate,
+  setSelectedDate,
+  setCurrentDate,
+}: Props) => {
   return (
     <>
       {calendar?.map((week, idx) => (
@@ -20,6 +26,7 @@ const Rows = ({calendar, selectedDate, setSelectedDate}: Props) => {
               item={date}
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
+              setCurrentDate={setCurrentDate}
             />
           ))}
         </View>
