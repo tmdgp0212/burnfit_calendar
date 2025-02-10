@@ -1,97 +1,44 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# BurnFit Front-end 과제 앱 구현
 
-# Getting Started
+안녕하세요, 버닛 지원자 Front-end 개발자 **조승혜** 입니다.
+소중한 면접 과제의 기회를 주셔서 감사합니다.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+- 개발기간 : 2025.02.06 - 2025.02.10
 
-## Step 1: Start Metro
+<br />
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 과제 풀이
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### 문제
+- Level 1 : React Native 기반 앱을 제작 하시오. 앱 하단에 Bottom Tabs Navigator를 추가하고  4개(홈 / 캘린더 / 라이브러리 / 마이페이지)의 탭을 추가하시오.  추가로 4개의 스크린을 생성하여 각 탭과 연결 하시오.
 
-```sh
-# Using npm
-npm start
+### 구현 내용
+  - [x] react-navigation의 Bottom Tabs를 이용하여 각 탭을 생성하고, 스크린을 연결하였습니다.
+  - [x] 각 탭의 아이콘을 적용하기 위해 react-native-vector-icons를 사용하였습니다.
+  - ![KakaoTalk_20250210_210718453_02](https://github.com/user-attachments/assets/3ce5dec6-5bd8-4c3a-9f50-9a82a45af8d6)
+  
+---
 
-# OR using Yarn
-yarn start
-```
+### 문제
+- Level 2 : 캘린더 탭에 외부 캘린더 라이브러리를 이용하지 않고 캘린더 컴포넌트를 제작하시오. 캘린더는 아래 이미지와 같은 형태로 월 캘린더로 구현하시오
+    - 기능 1 : 캘린더에 현재 월을 출력하고 오늘 날짜를 아래 이미지와 같이 구현 하시오.
+    - 기능 2 : 상단 좌우 화살표 버튼 클릭 시 전월, 익월을 캘린더에 출력 하시오.
+    - 기능 3 : 캘린더 상에 특정 날짜를 선택하면 해당 날짜에 원을 표시 하시오. 마지막으로 선택된 날짜만 표시해야 함.
 
-## Step 2: Build and run your app
+### 구현 내용
+  - [x] 라이브러리 없이 캘린더 UI를 구현하였습니다. 상단 좌우 화살표 버튼을 클릭하여 월 이동이 가능합니다.
+  - [x] 오늘 날짜를 빈 원으로 표시하였습니다.
+  - ![KakaoTalk_20250210_210718453](https://github.com/user-attachments/assets/3d2d7551-2750-43d3-9dcc-d952bf4f3435)
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+---
 
-### Android
+### 문제
+ - Level 3 : react-native-reanimated, react-native-gesture-handler 라이브러리를 이용해서 제스처 이벤트가 발생하면 아래와 같이 캘린더의 형태가 월 캘린더에서 주 캘린더로, 주 캘린더에서 다시 월 캘린더로 변환 가능하도록 구현 하시오
 
-```sh
-# Using npm
-npm run android
+### 구현 내용
+  - [x] 선택 된 날짜를 채워진 원으로 표시하였습니다
+  - [x] 위, 아래로 스와이프 시 주 캘린더, 월 캘린더 변환이 가능하도록 구현하였습니다.
+  - ![KakaoTalk_20250210_210718453_01](https://github.com/user-attachments/assets/7175a4f1-312e-4d27-9ded-f73cbd079193)
 
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+  - [x] 좌, 우로 스와이프 시 월 이동(월 캘린더) 및 주 이동(주 캘린더)이 가능합니다.
+  - ![KakaoTalk_20250210_210718453_03](https://github.com/user-attachments/assets/460b7a7a-da8d-4237-ad65-2d15c18762a3)
