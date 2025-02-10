@@ -1,7 +1,6 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {Day} from '../../types/calendar';
 import {dateComparer} from '../../util/dateComparer';
+import {Day} from '../../types/calendar';
 
 interface Props {
   item: Day;
@@ -18,18 +17,21 @@ const Cell = ({item, selectedDate, setSelectedDate}: Props) => {
       onPress={() => {
         setSelectedDate(item.date);
       }}
-      style={[
-        styles.cellContainer,
-        isToday && styles.today,
-        isSelected && styles.selected,
-      ]}>
-      <Text
+      style={[styles.cellContainer]}>
+      <View
         style={[
-          isSelected && styles.selected_text,
-          !item.isInCurrentMonth && styles.inactive,
+          styles.round,
+          isToday && styles.today,
+          isSelected && styles.selected,
         ]}>
-        {item.day}
-      </Text>
+        <Text
+          style={[
+            isSelected && styles.selected_text,
+            !item.isInCurrentMonth && styles.inactive,
+          ]}>
+          {item.day}
+        </Text>
+      </View>
     </Pressable>
   );
 };
@@ -40,11 +42,14 @@ const styles = StyleSheet.create({
   cellContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  round: {
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 32,
     height: 32,
     borderRadius: 100,
   },
-
   today: {
     borderWidth: 1,
     borderColor: '#232B99',

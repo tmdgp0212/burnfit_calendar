@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Calendar, Day} from '../types/calendar';
+import {getMonthlyCalendar, getWeeklyCalendar} from '../util/calendar';
 
 export const useCalendar = () => {
   const [currenDate, setCurrenDate] = useState(new Date());
@@ -9,93 +10,69 @@ export const useCalendar = () => {
   const [prevCalendar, setPrevCalendar] = useState<Calendar>();
   const [nextCalendar, setNextCalendar] = useState<Calendar>();
 
+  const [currentWeek, setCurrentWeek] = useState<Day[]>();
+  const [prevWeek, setPrevWeek] = useState<Day[]>();
+  const [nextWeek, setNextWeek] = useState<Day[]>();
+
+  const goPrevMonth = () => {
+    setCurrenDate(new Date(currenDate.getFullYear(), currenDate.getMonth(), 0));
+  };
+
   const goNextMonth = () => {
     setCurrenDate(
       new Date(currenDate.getFullYear(), currenDate.getMonth() + 1),
     );
   };
 
-  const goPrevMonth = () => {
+  const goPrevWeek = () => {
     setCurrenDate(
-      new Date(currenDate.getFullYear(), currenDate.getMonth() - 1),
+      new Date(
+        currenDate.getFullYear(),
+        currenDate.getMonth(),
+        currenDate.getDate() - 7,
+      ),
     );
   };
 
-  const getCalendar = (date: Date) => {
-    const calendar: Calendar = [];
-    let week: Day[] = [];
-
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const lastDate = new Date(year, month + 1, 0).getDate(); // 마지막 날짜(=일 갯수)
-    const prevLastDate = new Date(year, month, 0).getDate(); // 지난 달의 마지막 날짜
-    const startingDay = new Date(year, month, 1).getDay(); // 시작 요일
-
-    // 이전 달
-    for (let i = startingDay - 1; i >= 0; i--) {
-      const day = prevLastDate - i;
-      week.push({
-        date: new Date(date.getFullYear(), date.getMonth() - 1, day),
-        day: day,
-        isInCurrentMonth: false,
-      });
-    }
-
-    // 현재 달
-    for (let day = 1; day <= lastDate; day++) {
-      week.push({
-        date: new Date(date.getFullYear(), date.getMonth(), day),
-        day,
-        isInCurrentMonth: true,
-      });
-
-      if (week.length === 7) {
-        calendar.push(week);
-        week = [];
-      }
-    }
-
-    // 다음 달
-    if (week.length > 0) {
-      let nextDate = 1;
-      while (week.length < 7) {
-        const day = nextDate++;
-        week.push({
-          date: new Date(date.getFullYear(), date.getMonth() + 1, day),
-          day,
-          isInCurrentMonth: false,
-        });
-      }
-      calendar.push(week);
-    }
-
-    return calendar;
+  const goNextWeek = () => {
+    setCurrenDate(
+      new Date(
+        currenDate.getFullYear(),
+        currenDate.getMonth(),
+        currenDate.getDate() + 7,
+      ),
+    );
   };
 
   useEffect(() => {
-    setCurrentCalendar(getCalendar(currenDate));
-    setPrevCalendar(
-      getCalendar(
-        new Date(currenDate.getFullYear(), currenDate.getMonth() - 1),
-      ),
-    );
-    setNextCalendar(
-      getCalendar(
-        new Date(currenDate.getFullYear(), currenDate.getMonth() + 1),
-      ),
-    );
+    const year = currenDate.getFullYear();
+    const month = currenDate.getMonth();
+    const date = currenDate.getDate();
+
+    setCurrentCalendar(getMonthlyCalendar(currenDate));
+    setPrevCalendar(getMonthlyCalendar(new Date(year, month - 1)));
+    setNextCalendar(getMonthlyCalendar(new Date(year, month + 1)));
+
+    setCurrentWeek(getWeeklyCalendar(currenDate));
+    setPrevWeek(getWeeklyCalendar(new Date(year, month, date - 7)));
+    setNextWeek(getWeeklyCalendar(new Date(year, month, date + 7)));
   }, [currenDate]);
 
   return {
     currentCalendar,
     prevCalendar,
     nextCalendar,
+    currentWeek,
+    prevWeek,
+    nextWeek,
     currenDate,
     setCurrenDate,
     selectedDate,
     setSelectedDate,
     goNextMonth,
     goPrevMonth,
+    goPrevWeek,
+    goNextWeek,
   };
 };
 

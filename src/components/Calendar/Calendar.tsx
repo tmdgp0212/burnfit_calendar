@@ -7,25 +7,28 @@ import WeeklyCalendar from './WeeklyCalendar';
 
 import {useCalendar} from '../../hooks/useCalendar';
 import {dateComparer} from '../../util/dateComparer';
-import {CalendarType} from '../../types/calendar';
 import {days, months} from '../../const/date';
 
 const Calendar = () => {
   const calendar = useCalendar();
-  const [calendarType, setCalendarType] = useState<CalendarType>('monthly');
+  const [isMonthlyView, setIsMonthlyView] = useState(true);
+
+  const changeViewType = () => {
+    setIsMonthlyView(prev => !prev);
+  };
 
   return (
     <GestureHandlerRootView>
       <View style={styles.screen}>
         <View style={styles.navigation}>
-          <Pressable onPress={calendar.goPrevMonth}>
+          <Pressable onPress={calendar.goPrevMonth} style={styles.button}>
             <Text style={styles.icon}>&lt;</Text>
           </Pressable>
           <Text style={styles.month}>
             {months[calendar.currenDate.getMonth()]}{' '}
             {calendar.currenDate.getFullYear()}
           </Text>
-          <Pressable onPress={calendar.goNextMonth}>
+          <Pressable onPress={calendar.goNextMonth} style={styles.button}>
             <Text style={styles.icon}>&gt;</Text>
           </Pressable>
         </View>
@@ -49,18 +52,24 @@ const Calendar = () => {
           </View>
 
           {/* 월간/주간 달력 */}
-          {calendar && calendarType === 'monthly' ? (
+          {isMonthlyView ? (
             <MonthlyCalendar
               calendar={calendar}
-              setCalendarType={setCalendarType}
+              changeViewType={changeViewType}
             />
           ) : (
-            <WeeklyCalendar setCalendarType={setCalendarType} />
+            <WeeklyCalendar
+              calendar={calendar}
+              changeViewType={changeViewType}
+            />
           )}
         </View>
 
         {/* 플로팅 버튼 */}
-        {!dateComparer(calendar.currenDate, new Date()).isSameMonth && (
+        {((isMonthlyView &&
+          !dateComparer(calendar.currenDate, new Date()).isSameMonth) ||
+          (!isMonthlyView &&
+            !dateComparer(calendar.currenDate, new Date()).isSameWeek)) && (
           <Pressable
             style={styles.floating}
             onPress={() => {
@@ -79,6 +88,7 @@ export default Calendar;
 
 const styles = StyleSheet.create({
   screen: {
+    maxWidth: 420,
     flex: 1,
     paddingVertical: 24,
     paddingHorizontal: 16,
@@ -92,6 +102,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     fontSize: 18,
     textAlign: 'center',
+  },
+  button: {
+    width: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   icon: {
     color: '#232B99',

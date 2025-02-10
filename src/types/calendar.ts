@@ -5,5 +5,3 @@ export type Day = {
 };
 
 export type Calendar = Day[][];
-
-export type CalendarType = 'monthly' | 'weekly';
