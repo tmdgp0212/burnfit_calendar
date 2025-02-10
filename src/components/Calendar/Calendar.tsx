@@ -1,89 +1,77 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+
+import MonthlyCalendar from './MonthlyCalendar';
+import WeeklyCalendar from './WeeklyCalendar';
+
 import {useCalendar} from '../../hooks/useCalendar';
 import {dateComparer} from '../../util/dateComparer';
-import MonthlyCalendar from './MonthlyCalendar';
 import {CalendarType} from '../../types/calendar';
-
-const month = [
-  'Jan',
-  'Fab',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
-const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+import {days, months} from '../../const/date';
 
 const Calendar = () => {
+  const calendar = useCalendar();
   const [calendarType, setCalendarType] = useState<CalendarType>('monthly');
 
-  const {
-    calendar,
-    currenDate,
-    setCurrenDate,
-    selectedDate,
-    setSelectedDate,
-    goNextMonth,
-    goPrevMonth,
-  } = useCalendar();
-
   return (
-    <View style={styles.screen}>
-      <View style={styles.navigation}>
-        <Pressable onPress={goPrevMonth}>
-          <Text style={styles.icon}>&lt;</Text>
-        </Pressable>
-        <Text style={styles.month}>
-          {month[currenDate.getMonth()]} {currenDate.getFullYear()}
-        </Text>
-        <Pressable onPress={goNextMonth}>
-          <Text style={styles.icon}>&gt;</Text>
-        </Pressable>
-      </View>
-      <View style={styles.calendar}>
-        <View style={styles.row}>
-          {days.map(day => {
-            const isSun = day === 'Sun';
-            const isSat = day === 'Sat';
-            return (
-              <Pressable key={'day_' + day} style={styles.days}>
-                <Text
-                  style={[
-                    isSun ? styles.text_red : isSat ? styles.text_blue : {},
-                  ]}>
-                  {day}
-                </Text>
-              </Pressable>
-            );
-          })}
+    <GestureHandlerRootView>
+      <View style={styles.screen}>
+        <View style={styles.navigation}>
+          <Pressable onPress={calendar.goPrevMonth}>
+            <Text style={styles.icon}>&lt;</Text>
+          </Pressable>
+          <Text style={styles.month}>
+            {months[calendar.currenDate.getMonth()]}{' '}
+            {calendar.currenDate.getFullYear()}
+          </Text>
+          <Pressable onPress={calendar.goNextMonth}>
+            <Text style={styles.icon}>&gt;</Text>
+          </Pressable>
         </View>
-        {calendar && (
-          <MonthlyCalendar
-            calendar={calendar}
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-          />
+        <View>
+          {/* 요일표시 영역 */}
+          <View style={styles.row}>
+            {days.map(day => {
+              const isSun = day === 'Sun';
+              const isSat = day === 'Sat';
+              return (
+                <Pressable key={'day_' + day} style={styles.days}>
+                  <Text
+                    style={[
+                      isSun ? styles.text_red : isSat ? styles.text_blue : {},
+                    ]}>
+                    {day}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+
+          {/* 월간/주간 달력 */}
+          {calendar && calendarType === 'monthly' ? (
+            <MonthlyCalendar
+              calendar={calendar}
+              setCalendarType={setCalendarType}
+            />
+          ) : (
+            <WeeklyCalendar setCalendarType={setCalendarType} />
+          )}
+        </View>
+
+        {/* 플로팅 버튼 */}
+        {!dateComparer(calendar.currenDate, new Date()).isSameMonth && (
+          <Pressable
+            style={styles.floating}
+            onPress={() => {
+              calendar.setCurrenDate(new Date());
+              calendar.setSelectedDate(new Date());
+            }}>
+            <Text style={styles.text_white}>&lt; today</Text>
+          </Pressable>
         )}
       </View>
-      {!dateComparer(currenDate, new Date()).isSameDate && (
-        <Pressable
-          style={styles.floating}
-          onPress={() => {
-            setCurrenDate(new Date());
-            setSelectedDate(new Date());
-          }}>
-          <Text style={styles.text_white}>&lt; today</Text>
-        </Pressable>
-      )}
-    </View>
+    </GestureHandlerRootView>
   );
 };
 
@@ -100,7 +88,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  calendar: {},
   month: {
     flexGrow: 1,
     fontSize: 18,
